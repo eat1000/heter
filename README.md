@@ -8,7 +8,6 @@ Gang Shi (gshi@xidian.edu.cn)
 + [EIGEN] (https://eigen.tuxfamily.org)
 + [Intel MKL] (https://software.intel.com/)
 + [Boost] (https://www.boost.org/)
-+ [zlib] (https://www.zlib.net/)
 + [bgen] (https://github.com/limix/bgen)
 
 ## Installation
