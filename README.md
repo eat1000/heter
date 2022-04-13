@@ -1,5 +1,5 @@
 # heter
-"heter" is a program for conducting genome-wide variance quantitative trait locus (vQTL) analysis of quantitative traits with genotype data in bgen format. It comes with the analyses based on linear mixed model, variance component model, regression, chi-square resression as well as the Leven's (Brown-Forsythe) test.
+"heter" is a program for conducting genome-wide variance quantitative trait locus (vQTL) analysis with genotype data in bgen format. It comes with the analyses based on linear mixed model, variance component model, regression, chi-square resression as well as the Leven's (Brown-Forsythe) test.
 
 ## Author
 Gang Shi (gshi@xidian.edu.cn)
