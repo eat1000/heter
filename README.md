@@ -26,7 +26,7 @@ Type "./heter --help" from the command line to display program options of heter:
     --reg		Conduct the analysis by the linear regression.
     --creg		Conduct the analysis by the chi-square regression.
     --lev		Conduct the analysis by the Levene's (Brown-Forsythe) test.
-    --maf-min	Minimum MAF of the SNPs for the analysis [default: 0.01].
+    --maf-min	Minimum minor allele frequency of the SNPs for the analysis [default: 0.01].
     --thread-num	Number of threads on which the program will be running [default: thread number in your machine - 1].
     --batch-size	Number of SNPs to be processed in a batch [default: 1000].
     
