@@ -11,7 +11,7 @@ Gang Shi (gshi@xidian.edu.cn)
 + [bgen] (https://github.com/limix/bgen)
 
 ## Installation
-The archive includes an executable binary "heter" pre-compiled under CentOS8.0 (x86-64). To compile from source code, edit Makefile to point EIGEN_PATH, BGEN and MKL_PATH to your own locations of EIGEN3, BGEN and MKL, then type "make".
+The archive includes an executable binary "heter" pre-compiled under CentOS8.0 (x86-64). To compile from source code, edit Makefile to point EIGEN_PATH, BGEN_PATH and MKL_PATH to your own locations of EIGEN3, BGEN and MKL, then type "make".
 
 ## Usage
 Type "./heter --help" from the command line to display program options of heter:
