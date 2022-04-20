@@ -77,11 +77,12 @@ VectorXi maf_flag;
 MatrixXd X, P, Xt, batch_result;
 double r2, reg_df, like0, tau1_start, tau1_end, tau2_start, tau2_end, tau3_start, tau3_end, grid_if, maf_min, freq_min, freq_max;
 int tau1_num, tau2_num, tau3_num;
-bool grid_flag = false, error_flag = false;
+bool grid_flag = false;
 set<string> rs_set;
 	
 public:
 int thread_num, flag[30]{};
+bool error_flag = false;
 ofstream logFile;
 
 Dataset(int argc, char *argv[]) 
@@ -161,7 +162,7 @@ Dataset(int argc, char *argv[])
 		case 23: flag[23] = 1; break;
 		case 24: flag[24] = 1; break;
 		case 25: flag[25] = 1; arg[25] = optarg; maf_min = atof(optarg); freq_min = maf_min; freq_max = 1 - maf_min; break;
-		case 26: help(); exit(0); break;
+		case 26: flag[26] = 1; help(); exit(0); break;
 		default: break;
 		}
 	}
@@ -439,12 +440,6 @@ Dataset(int argc, char *argv[])
 		}
 	}
 	else {maf_min = 0.01; freq_min = 0.01; freq_max = 0.99;}
-
-	if (error_flag)
-	{
-		logFile.close();
-		exit(0);
-	}
 }
 
 ~Dataset() {logFile.close();}
@@ -597,8 +592,8 @@ void checkSampleFile()
 	ifstream sampleFile(sample_file.c_str());
 	if (!sampleFile.is_open())
 	{
-		cout << "Unable to open " << sample_file  << ", program stopped!" << endl;
-		logFile << "Unable to open " << sample_file  << ", program stopped!" << endl;
+		cout << "ERROR: Unable to open " << sample_file  << "!" << endl;
+		logFile << "ERROR: Unable to open " << sample_file  << "!" << endl;
 		logFile.close();
 		exit(0);
 	}
@@ -622,18 +617,18 @@ void checkSampleFile()
 	}
 	if (!found) 
 	{
-		cout << "Unable to find phenotype " << pheno_name  << " in sample file, program stopped!" << endl;
-		logFile << "Unable to find phenotype " << pheno_name  << " in sample file, program stopped!" << endl;
+		cout << "ERROR: Unable to find phenotype " << pheno_name  << " in sample file!" << endl;
+		logFile << "ERROR: Unable to find phenotype " << pheno_name  << " in sample file!" << endl;
 		logFile.close();
 		exit(0);
 	}
 	strtmp = (char *) pheno_type.c_str();
 	if ((strcmp(strtmp, "P") != 0) && (strcmp(strtmp, "C") != 0)) 
 	{
-		cout << "Phenotype " << pheno_name  << " is of type " <<  pheno_type << ", which is unrecognized." << endl;
-		logFile << "Phenotype " << pheno_name  << " is of type " <<  pheno_type << ", which is unrecognized." << endl;
-		cout << "Only continuous phenotype of type P or C is supported, program stopped!" << endl;
-		logFile << "Only continuous phenotype of type P or C is supported, program stopped!" << endl;
+		cout << "ERROR: Phenotype " << pheno_name  << " is of type " <<  pheno_type << ", which is unrecognized! ";
+		logFile << "ERROR: Phenotype " << pheno_name  << " is of type " <<  pheno_type << ", which is unrecognized! ";
+		cout << "Only continuous phenotype of type P or C is supported!" << endl;
+		logFile << "Only continuous phenotype of type P or C is supported!" << endl;
 		logFile.close();
 		exit(0);
 	}
@@ -653,8 +648,8 @@ void checkSampleFile()
 		} 
 		if (!found) 
 		{
-			cout << "Unable to find covariate " << covs_name[j]  << " in the sample file, program stopped!" << endl;
-			logFile << "Unable to find covariate " << covs_name[j]  << " in the sample file, program stopped!" << endl;
+			cout << "ERROR: Unable to find covariate " << covs_name[j]  << " in the sample file!" << endl;
+			logFile << "ERROR: Unable to find covariate " << covs_name[j]  << " in the sample file!" << endl;
 			logFile.close();
 			exit(0);
 		}
@@ -675,8 +670,8 @@ void checkSampleFile()
 		}
 		else 
 		{
-			cout << "Covariate " << covs_name[j]  << " is of type " <<  covs_type[j] << ", which is unrecognized, program stopped!" << endl;
-			logFile << "Covariate " << covs_name[j]  << " is of type " <<  covs_type[j] << ", which is unrecognized, program stopped!" << endl;
+			cout << "ERROR: Covariate " << covs_name[j]  << " is of type " <<  covs_type[j] << ", which is unrecognized!" << endl;
+			logFile << "ERROR: Covariate " << covs_name[j]  << " is of type " <<  covs_type[j] << ", which is unrecognized!" << endl;
 			logFile.close();
 			exit(0);
 		}
@@ -1335,15 +1330,15 @@ void analysis()
 	bgen = bgen_file_open(bgen_file.c_str());
 	if(bgen == NULL)
 	{
-		cout << "Unable to open " << bgen_file  << ", program stopped!" << endl;
-		logFile << "Unable to open " << bgen_file  << ", program stopped!" << endl;
+		cout << "ERROR: Unable to open " << bgen_file  << "!" << endl;
+		logFile << "ERROR: Unable to open " << bgen_file  << "!" << endl;
 		logFile.close();
 		exit(0);		
 	}
 	if(bgen_file_nsamples(bgen) != sample_num)
 	{
-		cout << "Sample number in " <<  bgen_file <<  " is " << bgen_file_nsamples(bgen) << ", which does not match the sample number " << sample_num <<  " in file " << sample_file << ", program stopped!" << endl;
-		logFile <<  "Sample number in " <<  bgen_file <<  " is " << bgen_file_nsamples(bgen) << ", which does not match the sample number " << sample_num <<  " in file " << sample_file << ", program stopped!" << endl;
+		cout << "ERROR: Sample number in " <<  bgen_file <<  " is " << bgen_file_nsamples(bgen) << ", which does not match the sample number " << sample_num <<  " in file " << sample_file << "!" << endl;
+		logFile <<  "ERROR: Sample number in " <<  bgen_file <<  " is " << bgen_file_nsamples(bgen) << ", which does not match the sample number " << sample_num <<  " in file " << sample_file << "!" << endl;
 		logFile.close();
 		exit(0);		
 	}
@@ -1663,15 +1658,15 @@ void analysis1snp()
 	bgen = bgen_file_open(bgen_file.c_str());
 	if(bgen == NULL)
 	{
-		cout << "Unable to open " << bgen_file  << ", program stopped!" << endl;
-		logFile << "Unable to open " << bgen_file  << ", program stopped!" << endl;
+		cout << "ERROR: Unable to open " << bgen_file  << "!" << endl;
+		logFile << "ERROR: Unable to open " << bgen_file  << "!" << endl;
 		logFile.close();
 		exit(0);		
 	}
 	if(bgen_file_nsamples(bgen) != sample_num)
 	{
-		cout << "Sample number in " <<  bgen_file <<  " is " << bgen_file_nsamples(bgen) << ", which does not match the sample number " << sample_num <<  " in file " << sample_file << ", program stopped!" << endl;
-		logFile <<  "Sample number in " <<  bgen_file <<  " is " << bgen_file_nsamples(bgen) << ", which does not match the sample number " << sample_num <<  " in file " << sample_file << ", program stopped!" << endl;
+		cout << "ERROR: Sample number in " <<  bgen_file <<  " is " << bgen_file_nsamples(bgen) << ", which does not match the sample number " << sample_num <<  " in file " << sample_file << "!" << endl;
+		logFile <<  "ERROR: Sample number in " <<  bgen_file <<  " is " << bgen_file_nsamples(bgen) << ", which does not match the sample number " << sample_num <<  " in file " << sample_file << "!" << endl;
 		logFile.close();
 		exit(0);		
 	}
@@ -1726,8 +1721,8 @@ void analysis1snp()
 	}
 	if (!snp_found)
 	{
-		cout << this_snp << " was not found in " << bgen_file << "." << endl;
-		logFile << this_snp << " was not found in " << bgen_file << "." << endl;
+		cout << "ERROR: " << this_snp << " was not found in " << bgen_file << "!" << endl;
+		logFile << "ERROR: " << this_snp << " was not found in " << bgen_file << "!" << endl;
 		logFile.close();
 		exit(0);
 	}
@@ -2110,15 +2105,15 @@ void analysisNsnps()
 	bgen = bgen_file_open(bgen_file.c_str());
 	if(bgen == NULL)
 	{
-		cout << "Unable to open " << bgen_file  << ", program stopped!" << endl;
-		logFile << "Unable to open " << bgen_file  << ", program stopped!" << endl;
+		cout << "ERROR: Unable to open " << bgen_file  << "!" << endl;
+		logFile << "ERROR: Unable to open " << bgen_file  << "!" << endl;
 		logFile.close();
 		exit(0);		
 	}
 	if(bgen_file_nsamples(bgen) != sample_num)
 	{
-		cout << "Sample number in " <<  bgen_file <<  " is " << bgen_file_nsamples(bgen) << ", which does not match the sample number " << sample_num <<  " in file " << sample_file << ", program stopped!" << endl;
-		logFile <<  "Sample number in " <<  bgen_file <<  " is " << bgen_file_nsamples(bgen) << ", which does not match the sample number " << sample_num <<  " in file " << sample_file << ", program stopped!" << endl;
+		cout << "ERROR: Sample number in " <<  bgen_file <<  " is " << bgen_file_nsamples(bgen) << ", which does not match the sample number " << sample_num <<  " in file " << sample_file << "!" << endl;
+		logFile <<  "ERROR: Sample number in " <<  bgen_file <<  " is " << bgen_file_nsamples(bgen) << ", which does not match the sample number " << sample_num <<  " in file " << sample_file << "!" << endl;
 		logFile.close();
 		exit(0);		
 	}
@@ -2386,15 +2381,15 @@ void Levene()
 	bgen = bgen_file_open(bgen_file.c_str());
 	if(bgen == NULL)
 	{
-		cout << "Unable to open " << bgen_file  << ", program stopped!" << endl;
-		logFile << "Unable to open " << bgen_file  << ", program stopped!" << endl;
+		cout << "ERROR: Unable to open " << bgen_file  << "!" << endl;
+		logFile << "ERROR: Unable to open " << bgen_file  << "!" << endl;
 		logFile.close();
 		exit(0);		
 	}
 	if(bgen_file_nsamples(bgen) != sample_num)
 	{
-		cout << "Sample number in " <<  bgen_file <<  " is " << bgen_file_nsamples(bgen) << ", which does not match the sample number " << sample_num <<  " in file " << sample_file << ", program stopped!" << endl;
-		logFile <<  "Sample number in " <<  bgen_file <<  " is " << bgen_file_nsamples(bgen) << ", which does not match the sample number " << sample_num <<  " in file " << sample_file << ", program stopped!" << endl;
+		cout << "ERROR: Sample number in " <<  bgen_file <<  " is " << bgen_file_nsamples(bgen) << ", which does not match the sample number " << sample_num <<  " in file " << sample_file << "!" << endl;
+		logFile <<  "ERROR: Sample number in " <<  bgen_file <<  " is " << bgen_file_nsamples(bgen) << ", which does not match the sample number " << sample_num <<  " in file " << sample_file << "!" << endl;
 		logFile.close();
 		exit(0);		
 	}
@@ -2518,6 +2513,11 @@ int main(int argc, char ** argv)
 	time_t current_time;
 	char * current_time_str;
 	Dataset dat(argc, argv);
+	if (dat.error_flag)
+	{
+		dat.logFile.close();
+		exit(0);
+	}
 	stringstream ss;
 	ss << dat.thread_num;
 	setenv("OMP_NUM_THREADS", ss.str().c_str(), 1);
