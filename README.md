@@ -1,5 +1,5 @@
 # heter
-"heter" is a program for conducting genome-wide variance quantitative trait locus (vQTL) analysis with genotype data in bgen format. It comes with the analyses based on linear mixed model, variance component model, regression, chi-square resression as well as the Levene's (Brown-Forsythe) test.
+"heter" is a program for conducting genome-wide variance quantitative trait locus (vQTL) analysis. It comes with the analyses based on a linear mixed model, variance component model, linear regression, chi-square resression as well as Levene's (Brown-Forsythe) test.
 
 ## Author
 Gang Shi (gshi@xidian.edu.cn)
@@ -14,7 +14,7 @@ Gang Shi (gshi@xidian.edu.cn)
 The archive includes an executable binary "heter" pre-compiled under CentOS8.0 (x86-64). To compile from source code, edit Makefile to point EIGEN_PATH, BGEN_PATH and MKL_PATH to your own locations of EIGEN3, BGEN and MKL, then type "make".
 
 ## Usage
-Type "./heter --help" from the command line to display program options of heter:
+Type "./heter --help" from the command line to display the program options:
 
     --bgen		Input genotype file in bgen format.
     --sample	Input sample file in SNPTEST sample file format. Missing data is coded as "NA".
@@ -23,12 +23,12 @@ Type "./heter --help" from the command line to display program options of heter:
     --covs		Specify the covariate(s) to be adjusted in the analysis.
     --vc		Conduct the analysis with the variance component model.
     --mixed		Conduct the analysis with the linear mixed model.
-    --reg		Conduct the analysis by the linear regression.
-    --creg		Conduct the analysis by the chi-square regression.
-    --lev		Conduct the analysis by the Levene's (Brown-Forsythe) test.
-    --maf-min	Minimum minor allele frequency of the SNPs for the analysis [default: 0.01].
+    --reg		Conduct the analysis with the linear regression.
+    --creg		Conduct the analysis with the chi-square regression.
+    --lev		Conduct the analysis with the Levene's (Brown-Forsythe) test.
+    --maf-min	Minimum minor allele frequency of SNPs for the analysis [default: 0.01].
     --thread-num	Number of threads on which the program will be running [default: thread number in your machine - 1].
     --batch-size	Number of SNPs to be processed in a batch [default: 1000].
     
 ## Citation
-Shi G. Genome-wide variance quantitative trait locus analysis of blood pressures in UK Biobank. In submission.
+Shi G. Genome-wide variance quantitative trait locus analysis of blood pressure in the UK Biobank. In submission.
