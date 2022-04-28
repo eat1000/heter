@@ -16,7 +16,7 @@ The archive includes an executable binary "heter" pre-compiled under CentOS8.0 (
 ## Usage
 Type "./heter --help" from the command line to display the program options:
 
-    --bgen		Input genotype file in bgen format.
+    --bgen		Input imputed genotype file in bgen format.
     --sample	Input sample file in SNPTEST sample file format. Missing data is coded as "NA".
     --out		Output file name [default: heter].
     --pheno		Specify the continous phenotype for analysis.
