@@ -31,4 +31,4 @@ Type "./heter --help" from the command line to display the program options:
     --batch-size	Number of SNPs to be processed in a batch [default: 1000].
     
 ## Citation
-Shi G. Novel analysis suggests small interaction effects in blood pressure traits. In submission.
+Shi G. Genome-wide variance quantitative trait locus analysis suggests small interaction effects in blood pressure traits. In submission.
