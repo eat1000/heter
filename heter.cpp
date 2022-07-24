@@ -190,9 +190,9 @@ Dataset(int argc, char *argv[])
 			cout << " " << covs_name[i];
 			logFile << " " << covs_name[i];
 		}
+		cout << endl;
+		logFile << endl;
 	}
-	cout << endl;
-	logFile << endl;
 	for (int i = 7; i < 10; i++)
 	{
 		if (flag[i] == 1) 
