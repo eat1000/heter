@@ -36,7 +36,7 @@ void cover()
 	cout << "+=======================================+" << endl;
 	cout << "|					|" << endl;
 	cout << "|		heter			|" << endl;
-	cout << "|		version 1.0.0		|" << endl;
+	cout << "|		version 1.0		|" << endl;
 	cout << "|					|" << endl;
 	cout << "+=======================================+" << endl;
 }
